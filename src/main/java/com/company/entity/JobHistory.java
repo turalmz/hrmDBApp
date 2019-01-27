@@ -12,19 +12,31 @@ import java.sql.Date;
  * @author TURAL
  */
 public class JobHistory {
+    Integer id;
     Employee employee;
     Date startDate;
     Date endDate;
     Job job;
     Department department;
 
-    public JobHistory(Employee employee, Date startDate, Date endDate, Job job, Department department) {
+    public JobHistory(Integer id, Employee employee, Date startDate, Date endDate, Job job, Department department) {
+        this.id = id;
         this.employee = employee;
         this.startDate = startDate;
         this.endDate = endDate;
         this.job = job;
         this.department = department;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+
 
     public Employee getEmployee() {
         return employee;

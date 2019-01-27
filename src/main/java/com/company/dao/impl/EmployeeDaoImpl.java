@@ -97,15 +97,18 @@ public class EmployeeDaoImpl extends AbstractDAO implements EmployeeDaoInter {
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE Employees SET JOB_TITLE =?,MIN_SALARY=?, MAX_SALARY=? WHERE id= ?;");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE Employees SET fullname =?,email=?, phone_nuber=?,hire_date=?,job_id=?,salary=?,commission_pct=?,manager_id=?,department_id=? WHERE id= ?;");
             stmt.setString(1, u.getFullname());
             stmt.setString(2, u.getEmail());
-            stmt.setString(2, u.getPhoneNumber());
-            stmt.setDate(2, u.getHireDate());
-            stmt.setInt(2, u.getDepartment().getId());
+            stmt.setString(3, u.getPhoneNumber());
+            stmt.setDate(4, u.getHireDate());
+            stmt.setInt(5, u.getJob().getId());
+            stmt.setDouble(6, u.getSalary());
+            stmt.setDouble(7, u.getCommissionPct());
+            stmt.setInt(8, u.getManager().getId());
+            stmt.setInt(9, u.getDepartment().getId());
 
-            stmt.setDouble(3, u.getSalary());
-            stmt.setInt(4, u.getId());
+            stmt.setInt(10, u.getId());
 
             b = stmt.execute();
 
@@ -138,10 +141,17 @@ public class EmployeeDaoImpl extends AbstractDAO implements EmployeeDaoInter {
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Employees (JOB_TITLE ,MIN_SALARY, MAX_SALARY) VALUES (?,?,?);");
-            stmt.setString(1, u.getTitle());
-            stmt.setDouble(2, u.getMinSalary());
-            stmt.setDouble(3, u.getMaxSalary());
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Employees (fullname ,email, phone_nuber, hire_date, job_id,salary, commission_pct, manager_id, department_id) VALUES (?,?,?,?,?,?,?,?,?);");
+            stmt.setString(1, u.getFullname());
+            stmt.setString(2, u.getEmail());
+            stmt.setString(3, u.getPhoneNumber());
+            stmt.setDate(4, u.getHireDate());
+            stmt.setInt(5, u.getJob().getId());
+            stmt.setDouble(6, u.getSalary());
+            stmt.setDouble(7, u.getCommissionPct());
+            stmt.setInt(8, u.getManager().getId());
+            stmt.setInt(9, u.getDepartment().getId());
+
 
             b = stmt.execute();
 

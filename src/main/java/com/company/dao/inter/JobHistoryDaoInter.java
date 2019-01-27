@@ -22,4 +22,6 @@ public interface JobHistoryDaoInter {
      
     boolean removeJobHistory(int id);
     
+    boolean insertJobHistory(JobHistory u);
+    
 }
