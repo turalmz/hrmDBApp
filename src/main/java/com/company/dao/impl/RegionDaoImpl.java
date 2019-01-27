@@ -6,9 +6,7 @@
 package com.company.dao.impl;
 
 import com.company.dao.inter.AbstractDAO;
-import com.company.dao.inter.JobDaoInter;
-import com.company.entity.Country;
-import com.company.entity.Job;
+import com.company.dao.inter.RegionDaoInter;
 import com.company.entity.Region;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,35 +20,33 @@ import java.util.List;
  *
  * @author TURAL
  */
-public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
+public class RegionDaoImpl extends AbstractDAO implements RegionDaoInter {
 
-    public Job getJob(ResultSet rs) throws SQLException {
+    public Region getRegion(ResultSet rs) throws SQLException {
 
         int id = rs.getInt("Id");
-        String title = rs.getString("JOB_TITLE");
-        double minSalary = rs.getDouble("MIN_SALARY");
-        double maxSalary = rs.getDouble("MAX_SALARY");
+        String name = rs.getString("NAME");
 
-        Job contry = new Job(id, title, minSalary, maxSalary);
+        Region contry = new Region(id, name);
         System.out.println(contry);
         return contry;
 
     }
 
     @Override
-    public List<Job> getAll() {
-        List<Job> list = new ArrayList<>();
+    public List<Region> getAll() {
+        List<Region> list = new ArrayList<>();
         Connection conn;
         try {
             conn = connect();
 
             Statement stmt = conn.createStatement();
-            stmt.execute("SELECT * FROM Jobs;");
+            stmt.execute("SELECT * FROM Regions;");
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
 
-                Job contry = getJob(rs);
+                Region contry = getRegion(rs);
                 list.add(contry);
 
             }
@@ -61,13 +57,13 @@ public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
     }
 
     @Override
-    public Job getById(int userId) {
-        Job el = null;
+    public Region getById(int userId) {
+        Region el = null;
         Connection conn;
         try {
             conn = connect();
 
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Jobs WHERE ID = ?;");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Regions WHERE ID = ?;");
             stmt.setInt(1, userId);
             stmt.execute();
 
@@ -75,7 +71,7 @@ public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
 
             while (rs.next()) {
 
-                el = getJob(rs);
+                el = getRegion(rs);
 
             }
         } catch (Exception ex) {
@@ -85,16 +81,14 @@ public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
     }
 
     @Override
-    public boolean updateJob(Job u) {
+    public boolean updateRegion(Region u) {
         Connection conn;
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE Jobs SET JOB_TITLE =?,MIN_SALARY=?, MAX_SALARY=? WHERE id= ?;");
-            stmt.setString(1, u.getTitle());
-            stmt.setDouble(2, u.getMinSalary());
-            stmt.setDouble(3, u.getMaxSalary());
-            stmt.setInt(4, u.getId());
+            PreparedStatement stmt = conn.prepareStatement("UPDATE Regions SET name=? WHERE id= ?;");
+            stmt.setString(1, u.getName());
+            stmt.setInt(2, u.getId());
 
             b = stmt.execute();
 
@@ -106,12 +100,12 @@ public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
     }
 
     @Override
-    public boolean removeJob(int id) {
+    public boolean removeRegion(int id) {
         Connection conn;
         try {
             conn = connect();
 
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Jobs WHERE id=?;");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Regions WHERE id=?;");
             stmt.setInt(1, id);
 
             return stmt.execute();
@@ -121,16 +115,14 @@ public class JobDaoImpl extends AbstractDAO implements JobDaoInter {
     }
 
     @Override
-    public boolean insertJob(Job u) {
+    public boolean insertRegion(Region u) {
 
         Connection conn;
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Jobs (JOB_TITLE ,MIN_SALARY, MAX_SALARY) VALUES (?,?,?);");
-            stmt.setString(1, u.getTitle());
-            stmt.setDouble(2, u.getMinSalary());
-            stmt.setDouble(3, u.getMaxSalary());
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Regions (name) VALUES (?);");
+            stmt.setString(1, u.getName());
 
             b = stmt.execute();
 

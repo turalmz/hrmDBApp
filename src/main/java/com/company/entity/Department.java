@@ -23,6 +23,10 @@ public class Department {
         this.location = location;
     }
 
+    public Department(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }

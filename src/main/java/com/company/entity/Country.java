@@ -20,6 +20,11 @@ public class Country {
         this.region = region;
     }
 
+    public Country(Integer id) {
+        this.id = id;
+    }
+
+    
     public Region getRegion() {
         return region;
     }
@@ -27,9 +32,6 @@ public class Country {
     public void setRegion(Region region) {
         this.region = region;
     }
-
-
-
 
 
     public Integer getId() {

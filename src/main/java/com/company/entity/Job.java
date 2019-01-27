@@ -22,6 +22,10 @@ public class Job {
         this.maxSalary = maxSalary;
     }
 
+    public Job(Integer id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
