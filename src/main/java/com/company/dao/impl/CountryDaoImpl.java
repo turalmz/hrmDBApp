@@ -53,7 +53,7 @@ public class CountryDaoImpl extends AbstractDAO implements CountryDaoInter {
 
             }
         } catch (Exception ex) {
-
+            System.err.println(ex);
         }
         return list;
     }
@@ -77,6 +77,7 @@ public class CountryDaoImpl extends AbstractDAO implements CountryDaoInter {
 
             }
         } catch (Exception ex) {
+            System.err.println(ex);
 
         }
         return el;
