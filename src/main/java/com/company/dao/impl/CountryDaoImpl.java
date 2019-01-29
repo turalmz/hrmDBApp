@@ -27,7 +27,7 @@ public class CountryDaoImpl extends AbstractDAO implements CountryDaoInter {
 
         int id = rs.getInt("Id");
         String name = rs.getString("NAME");
-        int regionId = rs.getInt("REGION_ID");
+        String regionId = rs.getString("REGION_ID");
 
         Country contry = new Country(id, name,new Region(regionId));
         System.out.println(contry);
@@ -90,7 +90,7 @@ public class CountryDaoImpl extends AbstractDAO implements CountryDaoInter {
             conn = connect();
             PreparedStatement stmt = conn.prepareStatement("UPDATE countries SET name=?,REGION_ID=? WHERE id= ?;");
             stmt.setString(1, u.getName());
-            stmt.setInt(2, u.getRegion().getId());
+            stmt.setString(2, u.getRegion().getId());
             stmt.setInt(3, u.getId());
             b = stmt.execute();
 

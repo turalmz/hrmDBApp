@@ -24,7 +24,7 @@ public class RegionDaoImpl extends AbstractDAO implements RegionDaoInter {
 
     public Region getRegion(ResultSet rs) throws SQLException {
 
-        int id = rs.getInt("Id");
+        String id = rs.getString("Id");
         String name = rs.getString("NAME");
 
         Region contry = new Region(id, name);
@@ -88,7 +88,7 @@ public class RegionDaoImpl extends AbstractDAO implements RegionDaoInter {
             conn = connect();
             PreparedStatement stmt = conn.prepareStatement("UPDATE Regions SET name=? WHERE id= ?;");
             stmt.setString(1, u.getName());
-            stmt.setInt(2, u.getId());
+            stmt.setString(2, u.getId());
 
             b = stmt.execute();
 
@@ -121,7 +121,8 @@ public class RegionDaoImpl extends AbstractDAO implements RegionDaoInter {
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Regions (name) VALUES (?);");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Regions (id,name) VALUES (?,?);");
+            stmt.setString(1, u.getId());
             stmt.setString(1, u.getName());
 
             b = stmt.execute();

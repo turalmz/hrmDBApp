@@ -6,6 +6,7 @@
 package com.company.entity;
 
 import java.sql.Date;
+import java.util.Objects;
 
 /**
  *
@@ -13,7 +14,9 @@ import java.sql.Date;
  */
 public class Employee {
     Integer id;
-    String fullname; 
+    String firstname; 
+    String lastname; 
+
     String email; 
     String phoneNumber; 
     Date hireDate;
@@ -25,9 +28,10 @@ public class Employee {
     Employee manager;
     Department department;
     
-    public Employee(Integer id, String fullname, String email, String phoneNumber, Date hireDate, Job job, Double salary, Double commissionPct, Employee manager, Department department) {
+    public Employee(Integer id, String firstname,String lastname, String email, String phoneNumber, Date hireDate, Job job, Double salary, Double commissionPct, Employee manager, Department department) {
         this.id = id;
-        this.fullname = fullname;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.hireDate = hireDate;
@@ -51,13 +55,23 @@ public class Employee {
         this.id = id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+
 
     public String getEmail() {
         return email;
@@ -125,7 +139,32 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" + "id=" + id + ", fullname=" + fullname + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", job=" + job + ", salary=" + salary + ", commissionPct=" + commissionPct + ", manager=" + manager + ", department=" + department + '}';
+        return "Employee{" + "id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", phoneNumber=" + phoneNumber + ", hireDate=" + hireDate + ", job=" + job + ", salary=" + salary + ", commissionPct=" + commissionPct + ", manager=" + manager + ", department=" + department + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Employee other = (Employee) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
 
    

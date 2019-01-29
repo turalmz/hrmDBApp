@@ -5,29 +5,31 @@
  */
 package com.company.entity;
 
+import java.util.Objects;
+
 /**
  *
  * @author TURAL
  */
 public class Region {
     
-    Integer id;
+    String id;
     String name;
 
-    public Region(Integer id, String name) {
+    public Region(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Region(Integer id) {
+    public Region(String id) {
         this.id = id;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,6 +43,35 @@ public class Region {
 
     @Override
     public String toString() {
-        return "Region{" + "id=" + id + ", name=" + name + '}';
+        return  name ;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Region other = (Region) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+  
+
+
 }
