@@ -165,42 +165,58 @@ public class EmployeeDaoImpl extends AbstractDAO implements EmployeeDaoInter {
         PreparedStatement stmt = null;
         try {
             conn = connect();
-            stmt = conn.prepareStatement("INSERT INTO Employees "
-                    + "(firstname,lastname ,email, phone_number, hire_date, job_id,salary, commission_pct, manager_id, department_id) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?);");
-            stmt.setString(1, u.getFirstname());
-            stmt.setString(2, u.getLastname());
-            System.err.println("hire");
-            stmt.setString(3, u.getEmail());
-            stmt.setString(4, u.getPhoneNumber());
             if (u.getHireDate() != null) {
-                stmt.setDate(5, u.getHireDate());
+                stmt = conn.prepareStatement("INSERT INTO Employees "
+                        + "(firstname,lastname ,email, phone_number,department_id, job_id,salary, commission_pct, manager_id, hire_date) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?);");
             } else {
-                stmt.setNull(5,java.sql.Types.DATE);
-
+                stmt = conn.prepareStatement("INSERT INTO Employees "
+                        + "(firstname,lastname ,email, phone_number,department_id, job_id,salary, commission_pct, manager_id) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?);");
             }
 
-    
+            stmt.setString(1, u.getFirstname());
+            stmt.setString(2, u.getLastname());
+
+            stmt.setString(3, u.getEmail());
+            stmt.setString(4, u.getPhoneNumber());
+
+            if (u.getDepartment() != null) {
+                
+                if (u.getDepartment().getId() != null) {
+                    stmt.setInt(5, u.getDepartment().getId());
+                } else {
+                    stmt.setNull(5, java.sql.Types.INTEGER);
+
+                }
+
+            } else {
+                stmt.setNull(5, java.sql.Types.INTEGER);
+            }
+
             if (u.getJob() != null) {
                 stmt.setInt(6, u.getJob().getId());
-            } else{
-                stmt.setString(6, null);
+            } else {
+                stmt.setNull(6, java.sql.Types.INTEGER);
 
             }
             stmt.setDouble(7, u.getSalary());
             stmt.setDouble(8, u.getCommissionPct());
-            try {
+            if (u.getManager() != null) {
                 stmt.setInt(9, u.getManager().getId());
-
-            } catch (Exception ex) {
-                stmt.setString(9, null);
-
+            } else {
+                stmt.setNull(9, java.sql.Types.INTEGER);
             }
-            try {
-                stmt.setInt(10, u.getDepartment().getId());
-            } catch (Exception ex) {
-                stmt.setString(10, null);
+
+            if (u.getHireDate() != null) {
+                stmt.setDate(10, u.getHireDate());
+                System.out.println("not null");
+            } else {
+                System.out.println("null");
+
+                u.setHireDate(null);
             }
+
             System.out.println(stmt);
 
             b = stmt.execute();
@@ -213,5 +229,6 @@ public class EmployeeDaoImpl extends AbstractDAO implements EmployeeDaoInter {
         }
         return b;
     }
+
 
 }

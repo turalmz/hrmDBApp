@@ -45,7 +45,7 @@ public class DepartmentDaoImpl extends AbstractDAO implements DepartmentDaoInter
             conn = connect();
 
             Statement stmt = conn.createStatement();
-            stmt.execute("SELECT * FROM Departments;");
+            stmt.execute("SELECT * FROM departments;");
             ResultSet rs = stmt.getResultSet();
 
             while (rs.next()) {
@@ -67,7 +67,7 @@ public class DepartmentDaoImpl extends AbstractDAO implements DepartmentDaoInter
         try {
             conn = connect();
 
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Departments WHERE ID = ?;");
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM departments WHERE ID = ?;");
             stmt.setInt(1, userId);
             stmt.execute();
 
@@ -90,7 +90,7 @@ public class DepartmentDaoImpl extends AbstractDAO implements DepartmentDaoInter
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("UPDATE Departments SET NAME =?,MANAGER_ID=?, LOCATION_ID=? WHERE id= ?;");
+            PreparedStatement stmt = conn.prepareStatement("UPDATE departments SET name =?,manager_id=?, location_id=? WHERE id= ?;");
             stmt.setString(1, u.getName());
             stmt.setDouble(2, u.getManager().getId());
             stmt.setDouble(3, u.getLocation().getId());
@@ -111,7 +111,7 @@ public class DepartmentDaoImpl extends AbstractDAO implements DepartmentDaoInter
         try {
             conn = connect();
 
-            PreparedStatement stmt = conn.prepareStatement("DELETE FROM Departments WHERE id=?;");
+            PreparedStatement stmt = conn.prepareStatement("DELETE FROM departments WHERE id=?;");
             stmt.setInt(1, id);
 
             return stmt.execute();
@@ -127,7 +127,7 @@ public class DepartmentDaoImpl extends AbstractDAO implements DepartmentDaoInter
         boolean b = true;
         try {
             conn = connect();
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO Departments (NAME ,MANAGER_ID, LOCATION_ID) VALUES (?,?,?) ;");
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO departments (name ,managerid, location_id) VALUES (?,?,?) ;");
             stmt.setString(1, u.getName());
             stmt.setDouble(2, u.getManager().getId());
             stmt.setDouble(3, u.getLocation().getId());
