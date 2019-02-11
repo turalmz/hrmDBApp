@@ -23,4 +23,5 @@ public interface EmployeeDaoInter {
     boolean removeEmployee(int id);
 
     boolean insertEmployee(Employee skl);
+
 }
